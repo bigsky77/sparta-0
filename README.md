@@ -8,9 +8,9 @@ Sparta(0) is a blazingly fast Rust implementation of the SuperSparta polynomial 
 
 To build and run the repository.
 
-'''
+```
 cargo run --release
-'''
+```
 
 ## Reference
 1. https://anoma.net/blog/superspartan-by-hand
