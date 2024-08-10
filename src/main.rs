@@ -2,7 +2,12 @@
 extern crate lazy_static;
 extern crate nalgebra as na;
 extern crate rand;
+extern crate num_bigint;
+extern crate num_traits;
 
+mod polynomial;
+
+use polynomial::{FiniteField, PolynomialRing};
 use na::{DMatrix, DVector};
 use rand::Rng;
 
@@ -99,29 +104,6 @@ fn mi_z_prod(mi: &DMatrix<i32>, zi: &DVector<i32>) -> i32 {
 }
 
 fn compute_g(z1: &DVector<i32>) -> i32 {
-    lazy_static::lazy_static! {
-        pub static ref M1: DMatrix<i32> = DMatrix::from_row_slice(4, 8, &[
-            1, 1, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 1, 0, 0, 0,
-            0, 0, 1, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
-        ]);
-
-        pub static ref M2: DMatrix<i32> = DMatrix::from_row_slice(4, 8, &[
-            0, 0, 0, 0, 0, 0, 0, 1,
-            0, 0, 0, 1, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 1, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
-        ]);
-
-        pub static ref M3: DMatrix<i32> = DMatrix::from_row_slice(4, 8, &[
-            0, 0, 1, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 1, 0, 0,
-            0, 0, 0, 0, 0, 0, 1, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
-        ]);
-    }
-
     let prod_m1_z1 = mi_z_prod(&M1, z1);
     let prod_m2_z1 = mi_z_prod(&M2, z1);
     let prod_m3_z1 = mi_z_prod(&M3, z1);
@@ -174,7 +156,7 @@ fn compute_q1(y11: i32, r1: i32, r2: i32, alpha: i32, z1: &DVector<i32>) -> i32 
         .sum()
 }
 
-    // Define compute_q2 as a function that takes y22 as a parameter
+// Define compute_q2 as a function that takes y22 as a parameter
 fn compute_q2(y22: i32, r1: i32, r2: i32, r11: i32, alpha: i32, z1: &DVector<i32>) -> i32 {
     (0..=1)
         .map(|y3| {
@@ -196,6 +178,18 @@ fn compute_q3(y33: i32, r1: i32, r2: i32, r11: i32, r22: i32, alpha: i32, z1: &D
 }
 
 fn main() {
+    // Finite field prime
+    let prime = 7;
+
+    // Variable names as a single string
+    let variable_names = "x1, x2, y1, y2, y3, x11, x22, y11, y22, y33";
+
+    // Create PolynomialRing
+    let ring = PolynomialRing::new(prime, 10, variable_names);
+
+    // Generate variables
+    let vars = ring.gens();
+
     // Generate random elements beta1 and beta2
     let mut rng = rand::thread_rng();
     let beta1: i32 = rng.gen();
