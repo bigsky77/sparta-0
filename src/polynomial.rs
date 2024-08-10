@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt;
 
 #[derive(Clone)]
 pub struct FiniteField {
@@ -13,6 +14,10 @@ impl FiniteField {
             v += prime;
         }
         Self { value: v, prime }
+    }
+
+    pub fn get_value(&self) -> i32 {
+        self.value
     }
 
     pub fn add(&self, other: &Self) -> Self {
@@ -47,6 +52,12 @@ fn mod_inv(a: i32, m: i32) -> i32 {
         xy.0 += m;
     }
     xy.0
+}
+
+impl fmt::Debug for FiniteField {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.value)
+    }
 }
 
 pub struct Polynomial {
