@@ -229,6 +229,9 @@ fn main() {
 
     // Run the verifier
     verify(proof);
+
+    println!();
+    println!("\x1b[32mSparta(0) Execution Complete\x1b[0m");
 }
 
 fn prove(z1: DVector<i32>) -> Proof {
@@ -243,6 +246,7 @@ fn prove(z1: DVector<i32>) -> Proof {
     let r2 = 0;
 
     // Create a mutable `Proof` instance
+    // TODO refactor this to real code lol
     let mut proof = Proof {
         alpha: rng.gen(),
         beta1: rng.gen(),
@@ -281,7 +285,7 @@ fn prove(z1: DVector<i32>) -> Proof {
         println!("      CCS relation check failed.");
     }
 
-    // Transform CCS relation into -> sum-check
+    // Transform CCS relation into -> sumcheck
     let prod_m1_z1 = mi_z_prod(&M1, &z1);
     let prod_m2_z1 = mi_z_prod(&M2, &z1);
     let prod_m3_z1 = mi_z_prod(&M3, &z1);
