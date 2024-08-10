@@ -4,6 +4,7 @@ pub fn verify(proof: Proof) {
 
     println!();
     println!("\x1b[32mVerifier Running\x1b[0m");
+
     // Outer sum-check
     let sum_q: i32 = (0..=1)
         .map(|x1| {

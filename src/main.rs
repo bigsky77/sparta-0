@@ -9,13 +9,17 @@ mod polynomial;
 mod prover;
 mod verifier;
 
-use prover::{prove, Proof, compute_q1, compute_q2, compute_q3, eqx};
+use prover::prove;
 use verifier::verify;
 
 use polynomial::{FiniteField, PolynomialRing};
 use na::DVector;
 
 fn main() {
+
+    println!();
+    println!("\x1b[32mSparta(0) Starting Execution\x1b[0m");
+
     // Finite field prime
     let prime = 7;
 
@@ -40,6 +44,7 @@ fn main() {
 
     let combined_values: Vec<i32> = extended_combined_ff.iter().map(|ff| ff.get_value()).collect();
     let z1 = DVector::from_vec(combined_values);
+    println!("      Z1: {:?}", z1);
 
     // Run the prover
     let proof = prove(z1);
