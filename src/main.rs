@@ -282,27 +282,17 @@ fn prove(z1: DVector<i32>) -> Proof {
     }
 
     // Transform CCS relation into -> sum-check
-    let mi_result = mi_linear(&M1, 0, 0, 1, 0, 0);
-    let z_result = z_linear(&z1, 1, 0, 0);
-    let mi_z_result = mi_z_prod(&M1, &z1);
-
     let prod_m1_z1 = mi_z_prod(&M1, &z1);
     let prod_m2_z1 = mi_z_prod(&M2, &z1);
     let prod_m3_z1 = mi_z_prod(&M3, &z1);
 
     let g = prod_m1_z1 * prod_m2_z1 - prod_m3_z1;
-    let h = compute_h(&z1);
+    let _h = compute_h(&z1);
 
     let q = g * eqx(proof.beta1, proof.beta2, prod_m1_z1, prod_m2_z1);
     proof.q = q;
 
-    // Round 1
-    let q1: i32 = (0..=1)
-        .map(|x2| q * eqx(x2, x2, x2, x2))  // Assuming q depends on x2
-        .sum();
-
-    proof.s1 = q1;
-
+    // Generate T values
     let t1 = ti_generator(&M1, &z1, r1, r2);
     let t2 = ti_generator(&M2, &z1, r1, r2);
     let t3 = ti_generator(&M3, &z1, r1, r2);
@@ -313,6 +303,13 @@ fn prove(z1: DVector<i32>) -> Proof {
 
     let alpha_squared = proof.alpha * proof.alpha;
     proof.t = t1 + proof.alpha * t2 + alpha_squared * t3;
+
+    // Round 1
+    let q1: i32 = (0..=1)
+        .map(|x2| q * eqx(x2, x2, x2, x2))  // Assuming q depends on x2
+        .sum();
+
+    proof.s1 = q1;
 
     // Round 2
     let q2_y22_0 = compute_q2(0, r1, r2, proof.r11, proof.alpha, &z1);
