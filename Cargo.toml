@@ -10,4 +10,4 @@ rand = "0.8"
 num-bigint = "0.4"
 num-traits = "0.2"
 num = "0.4.0"
-ronkathon = { git = "https://github.com/wu-s-john/ronkathon.git"}
+ronkathon = { path = "../ronkathon"}
