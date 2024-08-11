@@ -2,7 +2,7 @@
 
 ![SPARTA0](./assets/Cover.png)
 
-Sparta(0) is a blazingly fast Rust implementation of the SuperSparta polynomial IOP based on the excellent [SuperSparta by Hand](https://anoma.net/blog/superspartan-by-hand) blog posts.
+Sparta(0) is a fast Rust implementation of the SuperSpartan polynomial IOP inspired by the [SuperSparta by Hand](https://anoma.net/blog/superspartan-by-hand) blog post.
 
 ## Protocol
 

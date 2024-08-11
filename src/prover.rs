@@ -237,8 +237,8 @@ pub fn prove(z1: DVector<i32>) -> Proof {
     if result == DVector::from_element(4, 0) {
         let m = M1.nrows();
         let n = M1.ncols();
-        println!("      CCS relation check passed.");
-        println!("      (m, n) = ({}, {})", m, n);
+        println!("      CCS relation check: passed");
+        println!("      Matrix Dimensions: (m, n) = ({}, {})", m, n);
     } else {
         println!("      CCS relation check failed.");
     }
